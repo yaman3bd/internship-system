@@ -94,6 +94,7 @@ class ApplicationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
 
@@ -112,12 +113,13 @@ class ApplicationResource extends Resource
         return [
             'index' => Pages\ListApplications::route('/'),
             'edit' => Pages\EditApplication::route('/{record}/edit'),
+            'view' => Pages\ViewApplication::route('/{record}'),
         ];
     }
 
     protected static function getNavigationBadge(): ?string
     {
-        if (auth()->user()->hasRole('career-center')) {
+        if (auth()->id() && auth()->user()->hasRole('career-center')) {
             return parent::getEloquentQuery()->where('status', 'approved')->count();
         } else {
             return static::getModel()::count();
@@ -127,7 +129,7 @@ class ApplicationResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        if (auth()->user()->hasRole('career-center')) {
+        if (auth()->id() && auth()->user()->hasRole('career-center')) {
             return parent::getEloquentQuery()->where('status', 'approved');
         } else {
             return parent::getEloquentQuery();

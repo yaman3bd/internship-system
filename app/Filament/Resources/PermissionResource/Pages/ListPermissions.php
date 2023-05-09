@@ -10,9 +10,4 @@ class ListPermissions extends ListRecords
 {
     protected static string $resource = PermissionResource::class;
 
-    protected function getActions(): array
-    {
-        return [
-        ];
-    }
 }

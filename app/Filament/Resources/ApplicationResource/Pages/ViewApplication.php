@@ -3,13 +3,10 @@
 namespace App\Filament\Resources\ApplicationResource\Pages;
 
 use App\Filament\Resources\ApplicationResource;
-
 use Filament\Pages\Actions;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\ViewRecord;
 
-class ListApplications extends ListRecords
+class ViewApplication extends ViewRecord
 {
-
     protected static string $resource = ApplicationResource::class;
-
 }

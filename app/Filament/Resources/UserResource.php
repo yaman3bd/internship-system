@@ -22,7 +22,6 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Str;
-use Livewire\Component;
 
 
 class UserResource extends Resource
@@ -132,17 +131,6 @@ class UserResource extends Resource
                                                         ->required(),
 
                                             ]),
-                                    Fieldset::make('essential_info')
-                                            ->label('Security Information')
-                                            ->schema([
-                                                TextInput::make('password')
-                                                         ->password()
-                                                         ->required()
-                                                         ->hidden(fn(Component $livewire
-                                                         ): bool => $livewire instanceof Pages\EditUser)
-                                                         ->columnSpanFull(),
-                                            ])->hidden(fn(Component $livewire
-                                        ): bool => $livewire instanceof Pages\EditUser),
                                 ])
                                 ->columns(),
                      ])
