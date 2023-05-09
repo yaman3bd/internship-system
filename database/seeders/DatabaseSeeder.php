@@ -41,13 +41,28 @@ class DatabaseSeeder extends Seeder
         ]);
         $superAdmin->assignRole($superAdminRole);
 
-        $usersViewAny = Permission::query()
+        $studentsViewAny = Permission::query()
+                                     ->firstOrCreate([
+                                         'guard_name' => 'web_admin',
+                                         'name' => 'students.view_any',
+                                         'nickname' => 'View Any Student',
+                                         'description' => 'This permission allows the admin to view any student in the system'
+                                     ]);
+        $studentsView = Permission::query()
                                   ->firstOrCreate([
                                       'guard_name' => 'web_admin',
-                                      'name' => 'students.view_any',
-                                      'nickname' => 'View Students',
-                                      'description' => 'This permission allows the admin to view any student in the system'
+                                      'name' => 'students.view',
+                                      'nickname' => 'View Student',
+                                      'description' => 'This permission allows the admin to view only the student landing page in the system, this means he can not see the index page'
                                   ]);
+
+        $studentsUpdate = Permission::query()
+                                    ->firstOrCreate([
+                                        'guard_name' => 'web_admin',
+                                        'name' => 'students.update',
+                                        'nickname' => 'Update Student',
+                                        'description' => 'This permission allows the admin to update any student in the system'
+                                    ]);
 
         $applicationsViewAny = Permission::query()
                                          ->firstOrCreate([
@@ -96,8 +111,11 @@ class DatabaseSeeder extends Seeder
             $applicationsViewAny,
             $applicationsView,
             $applicationsUpdate,
-            $usersViewAny,
+            $studentsViewAny,
+            $studentsView,
+            $studentsUpdate,
         ]);
+
         $internshipCoordinator->assignRole($internshipCoordinatorRole);
 
         $careerCenterRole->givePermissionTo([

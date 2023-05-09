@@ -17,6 +17,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -183,6 +184,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 EditAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([
             ]);
@@ -200,6 +202,7 @@ class UserResource extends Resource
         return [
             'index' => Pages\ListUsers::route('/'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
+            'view' => Pages\ViewUser::route('/{record}'),
         ];
     }
 

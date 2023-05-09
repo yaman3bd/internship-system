@@ -19,10 +19,7 @@ class ApplicationPolicy
      */
     public function viewAny(Admin $admin)
     {
-        return $admin->hasRole([
-            'internship-coordinator',
-            'career-center'
-        ]);
+        return $admin->hasRole('super-admin') || $admin->hasPermissionTo('applications.view_any');
     }
 
     /**
@@ -33,26 +30,11 @@ class ApplicationPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(Admin $admin, Application $application)
+    public function view(Admin $admin)
     {
-        return $admin->hasRole([
-            'internship-coordinator',
-            'career-center'
-        ]);
+        return $admin->hasRole('super-admin') || $admin->hasPermissionTo('applications.view');
     }
 
-    /**
-     * Determine whether the admin can view the model.
-     *
-     * @param \App\Models\Admin       $admin
-     * @param \App\Models\Application $application
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(Admin $admin)
-    {
-        return false;
-    }
 
     /**
      * Determine whether the admin can update the model.
@@ -64,20 +46,6 @@ class ApplicationPolicy
      */
     public function update(Admin $admin, Application $application)
     {
-        return $admin->hasRole('internship-coordinator');
+        return $admin->hasRole('super-admin') || $admin->hasPermissionTo('applications.update');
     }
-
-    /**
-     * Determine whether the admin can view the model.
-     *
-     * @param \App\Models\Admin       $admin
-     * @param \App\Models\Application $application
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(Admin $admin)
-    {
-        return false;
-    }
-
 }

@@ -63,7 +63,6 @@ class RoleResource extends Resource
                                                 Select::make('permissions')
                                                       ->multiple()
                                                       ->relationship('permissions', 'nickname')
-                                                      ->required()
                                                       ->columnSpanFull()
                                                       ->preload(),
 

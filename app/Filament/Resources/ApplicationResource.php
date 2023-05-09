@@ -117,6 +117,21 @@ class ApplicationResource extends Resource
 
     protected static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        if (auth()->user()->hasRole('career-center')) {
+            return parent::getEloquentQuery()->where('status', 'approved')->count();
+        } else {
+            return static::getModel()::count();
+        }
+
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        if (auth()->user()->hasRole('career-center')) {
+            return parent::getEloquentQuery()->where('status', 'approved');
+        } else {
+            return parent::getEloquentQuery();
+        }
+
     }
 }
