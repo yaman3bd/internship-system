@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Filament\Resources\ApplicationResource\RelationManagers;
 use App\Models\Application;
-use App\Models\ApplicationFile;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -22,7 +21,8 @@ class ApplicationResource extends Resource
 {
     protected static ?string $model = Application::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationGroup = 'Academic';
 
     public static function form(Form $form): Form
     {
@@ -39,9 +39,6 @@ class ApplicationResource extends Resource
                                               'rejected' => 'Rejected',
                                               'pending' => 'Pending',
                                           ])
-                                          ->required(),
-                                    Select::make('application_name')
-                                          ->options(ApplicationFile::query()->get()->pluck('name', 'name'))
                                           ->required(),
                                     SpatieMediaLibraryFileUpload::make('files')
                                                                 ->label('Files')
@@ -117,5 +114,10 @@ class ApplicationResource extends Resource
             'create' => Pages\CreateApplication::route('/create'),
             'edit' => Pages\EditApplication::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

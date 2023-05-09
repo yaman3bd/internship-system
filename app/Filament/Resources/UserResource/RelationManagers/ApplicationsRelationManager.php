@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use App\Models\ApplicationFile;
+
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -37,11 +37,6 @@ class ApplicationsRelationManager extends RelationManager
                                               'rejected' => 'Rejected',
                                               'pending' => 'Pending',
                                           ])
-                                          ->required(),
-                                    Select::make('application_name')
-                                          ->options(ApplicationFile::query()
-                                                                   ->get()
-                                                                   ->pluck('name', 'name'))
                                           ->required(),
                                     SpatieMediaLibraryFileUpload::make('files')
                                                                 ->label('Files')

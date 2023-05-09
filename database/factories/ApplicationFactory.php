@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 
 use App\Models\Application;
-use App\Models\ApplicationFile;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,7 +22,7 @@ class ApplicationFactory extends Factory
         return [
             'user_id' => User::all()->random()->id,
             'status' => $this->faker->randomElement(['approved', 'rejected', 'pending']),
-            'application_name' => ApplicationFile::all()->random()->name,
+            'application_name' => $this->faker->word,
             'meta' => null,
         ];
     }

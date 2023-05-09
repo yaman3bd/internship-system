@@ -19,9 +19,9 @@ class AdminFactory extends Factory
 
         return [
             'name' => 'Admin',
-            'email' => 'admin@admin.com',
+            'email' => 'super_admin@admin.com',
             'email_verified_at' => now(),
-            'password' => 'test'
+            'password' => 'Password'
         ];
     }
 }

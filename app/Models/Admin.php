@@ -12,12 +12,24 @@ class Admin extends Authenticatable implements FilamentUser
 {
     use HasFactory;
     use HasRoles;
-    use HasRoles;
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
     public function canAccessFilament(): bool
     {
         return true;
     }
+
 
     public function setPasswordAttribute($value)
     {

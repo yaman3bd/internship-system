@@ -24,7 +24,12 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/dashboard', function () {
-        $applications = \App\Models\ApplicationFile::query()->get()->pluck('name', 'name');
+        $applications = collect([
+            [
+                'id' => 1,
+                'name' => 'John Doe',
+            ]
+        ]);
 
         return view('dashboard', compact('applications'));
     })->name('dashboard');
