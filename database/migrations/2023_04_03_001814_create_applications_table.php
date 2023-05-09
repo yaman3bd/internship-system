@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('application_name');
-            $table->enum('status', ['approved', 'rejected', 'pending'])->default('pending');
+            $table->enum('status', ['approved', 'rejected', 'pending', 'waiting for SGK'])->default('pending');
             $table->json('meta')->nullable();
             $table->timestamps();
         });

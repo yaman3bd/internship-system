@@ -1,26 +1,21 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Applications') }}
         </h2>
     </x-slot>
-
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="pb-4 flex justify-end">
-                <label for="table-search" class="sr-only">Search</label>
-                <x-button
-
-                >
-                    <a>Create New Application</a>
-                </x-button>
+                <a class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                   href="{{ route('applications.create') }}">Submit New Application</a>
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-left">
                     <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-lg font-medium text-gray-900">
-                            Application name
+                            Application Name
                         </th>
                         <th scope="col" class="px-6 py-3 text-lg font-medium text-gray-900">
                             Application Status
@@ -31,7 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($submitted_applications as $app)
+                    @forelse($submitted_applications as $app)
                         <tr @class(['bg-white border-b hover:bg-gray-50',$loop->last?'':'border-b'])>
                             <td class="px-6 py-4 text-base text-gray-600">
                                 {{ $app->application_name }}
@@ -59,37 +54,16 @@
                                 {{ $app->created_at }}
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3" class="px-6 py-4 text-base text-gray-600">
+                                No applications found.
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
-            <!--            <form class="max-w-lg mx-auto"
-                  method="POST"
-                  action="{{ route('applications.store') }}"
-                  enctype="multipart/form-data"
-            >
-                @csrf
-
-            <div class="mb-4">
-                <x-label for="file">
-                    File Upload Field
-                </x-label>
-                <x-input
-                    accepts="application/pdf"
-                    id="file"
-                    name="meta[files][]"
-                        multiple
-                        type="file"/>
-                </div>
-
-                <div class="mt-8">
-                    <x-button
-                        type="submit"
-                    >
-                        Submit
-                    </x-button>
-                </div>
-            </form>-->
         </div>
     </div>
 </x-app-layout>

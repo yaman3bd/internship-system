@@ -23,22 +23,18 @@ Route::middleware([
     'verified'
 ])->group(function () {
 
-    Route::get('/dashboard', function () {
-        $applications = collect([
-            [
-                'id' => 1,
-                'name' => 'John Doe',
-            ]
-        ]);
-
-        return view('dashboard', compact('applications'));
-    })->name('dashboard');
 
     Route::post('/upload', [\App\Http\Controllers\UploadController::class, 'store'])
          ->name('uploads.store');
 
     Route::delete('/upload', [\App\Http\Controllers\UploadController::class, 'destroy'])
          ->name('uploads.destroy');
+
+    Route::get('/applications',
+        [\App\Http\Controllers\ApplicationController::class, 'index'])->name('applications.index');
+
+    Route::get('/applications/create',
+        [\App\Http\Controllers\ApplicationController::class, 'create'])->name('applications.create');
 
     Route::post('/applications', [\App\Http\Controllers\ApplicationController::class, 'store'])
          ->name('applications.store');
