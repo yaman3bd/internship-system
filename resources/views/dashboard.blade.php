@@ -28,11 +28,7 @@
                             value="">
                             Select an application type
                         </option>
-                        @foreach($applications as $key => $application)
-                            <option value="{{ $key }}">
-                                {{ $application }}
-                            </option>
-                        @endforeach
+                       
                     </select>
                 </div>
                 <div class="mb-4">

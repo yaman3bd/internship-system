@@ -16,7 +16,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -51,16 +50,16 @@ class UserResource extends Resource
                                                              $value = $state . '@st.uskudar.edu.tr';
                                                              $set('email', Str::lower(Str::replace(' ', '.', $value)));
                                                          })
-                                                         ->unique()
+                                                         ->unique(ignoreRecord: true)
                                                          ->required(),
                                                 TextInput::make('email')
                                                          ->email()
                                                          ->disabled()
-                                                         ->unique()
+                                                         ->unique(ignoreRecord: true)
                                                          ->required(),
                                                 TextInput::make('phone')
                                                          ->tel()
-                                                         ->unique()
+                                                         ->unique(ignoreRecord: true)
                                                          ->required(),
                                                 Select::make('gender')
                                                       ->options([
@@ -77,7 +76,7 @@ class UserResource extends Resource
                                                 TextInput::make('student_no')
                                                          ->label('Student Number')
                                                          ->numeric()
-                                                         ->unique()
+                                                         ->unique(ignoreRecord: true)
                                                          ->required(),
                                                 Select::make('status')
                                                       ->options([
@@ -91,7 +90,7 @@ class UserResource extends Resource
                                             ->label('Identification Information')
                                             ->schema([
                                                 TextInput::make('national_id')
-                                                         ->unique()
+                                                         ->unique(ignoreRecord: true)
                                                          ->required(),
                                                 Select::make('country_code')
                                                       ->label('Nationality')
@@ -186,7 +185,6 @@ class UserResource extends Resource
                 EditAction::make(),
             ])
             ->bulkActions([
-                DeleteBulkAction::make(),
             ]);
     }
 
@@ -201,7 +199,6 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }

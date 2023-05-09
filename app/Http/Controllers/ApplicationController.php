@@ -16,7 +16,7 @@ class ApplicationController extends Controller
         $application = Application::query()->create(
             [
                 'user_id' => auth()->id(),
-                'application_name' => $request->get('application_name'),
+                'application_name' => 'application_name',
             ]
         );
 
