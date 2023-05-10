@@ -6,6 +6,7 @@ use App\Filament\Resources\ApplicationResource\Pages;
 use App\Filament\Resources\ApplicationResource\RelationManagers;
 use App\Models\Application;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -50,6 +51,9 @@ class ApplicationResource extends Resource
                                               'waiting_for_sgk' => 'Waiting For SGK'
                                           ])
                                           ->required(),
+                                    RichEditor::make('message')->hint('Leave a message to the student')
+                                              ->placeholder('Enter a message to the student')
+                                              ->columnSpanFull(),
                                     SpatieMediaLibraryFileUpload::make('files')
                                                                 ->label('Files')
                                                                 ->collection('files')
@@ -138,7 +142,7 @@ class ApplicationResource extends Resource
         }
 
         if (auth()->user()->hasRole('career-center')) {
-            return parent::getEloquentQuery()->where('status', 'approved')->count();
+            return parent::getEloquentQuery()->where('status', 'waiting_for_sgk')->count();
         } else {
             return static::getModel()::count();
         }
@@ -147,7 +151,7 @@ class ApplicationResource extends Resource
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
         if (auth()->id() && auth()->user()->hasRole('career-center')) {
-            return parent::getEloquentQuery()->where('status', 'approved');
+            return parent::getEloquentQuery()->where('status', 'waiting_for_sgk');
         } else {
             return parent::getEloquentQuery();
         }

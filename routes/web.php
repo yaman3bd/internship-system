@@ -40,6 +40,9 @@ Route::middleware([
     Route::get('/applications/create',
         [\App\Http\Controllers\ApplicationController::class, 'create'])->name('applications.create');
 
+    Route::get('/applications/{application}',
+        [\App\Http\Controllers\ApplicationController::class, 'show'])->name('applications.show');
+
     Route::post('/applications', [\App\Http\Controllers\ApplicationController::class, 'store'])
          ->name('applications.store');
 });

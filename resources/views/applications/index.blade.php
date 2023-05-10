@@ -23,6 +23,9 @@
                         <th scope="col" class="px-6 py-3 text-lg font-medium text-gray-900">
                             Submitted At
                         </th>
+                        <th scope="col" class="px-6 py-3 text-lg font-medium text-gray-900">
+                            #
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,7 +54,11 @@
 
                             </td>
                             <td class="px-6 py-4 text-base text-gray-600">
-                                {{ $app->created_at }}
+                                {{ $app->created_at->format('d/m/Y H:i') }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{route('applications.show',$app->id)}}"
+                                   class="font-medium text-indigo-600 underline">View</a>
                             </td>
                         </tr>
                     @empty

@@ -25,6 +25,7 @@ class Application extends Model implements HasMedia
         'user_id',
         'status',
         'type',
+        'message'
     ];
 
 

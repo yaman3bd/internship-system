@@ -18,7 +18,20 @@ class ApplicationController extends Controller
         ]));
     }
 
-    public function create()
+    public function show(Application $application)
+    {
+        $files = $application->getMedia('files')->map(function ($media) {
+            return [
+                'name' => $media->name,
+                'url' => $media->getUrl(),
+            ];
+        });
+
+        return view('applications.show', compact('application', 'files'));
+    }
+
+    public
+    function create()
     {
         /*
          * some fields the user can fill
@@ -33,8 +46,10 @@ class ApplicationController extends Controller
         return view('applications.create');
     }
 
-    public function store(Request $request)
-    {
+    public
+    function store(
+        Request $request
+    ) {
         $validated = $request->validate(
             [
                 'type' => 'required|in:official_letter_request,internship_application',
