@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('applications.index');
+    } else {
+        return view('welcome');
+    }
 });
 
 Route::middleware([

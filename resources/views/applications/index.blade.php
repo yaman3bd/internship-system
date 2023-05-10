@@ -15,7 +15,7 @@
                     <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-lg font-medium text-gray-900">
-                            Application Name
+                            Application Type
                         </th>
                         <th scope="col" class="px-6 py-3 text-lg font-medium text-gray-900">
                             Application Status
@@ -29,7 +29,7 @@
                     @forelse($submitted_applications as $app)
                         <tr @class(['bg-white border-b hover:bg-gray-50',$loop->last?'':'border-b'])>
                             <td class="px-6 py-4 text-base text-gray-600">
-                                {{ $app->application_name }}
+                                {{ \Illuminate\Support\Str::of($app->type)->replace('_',' ')->headline() }}
                             </td>
                             <td class="px-6 py-4">
                                 @if($app->status==='waiting for SGK')

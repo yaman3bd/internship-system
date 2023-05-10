@@ -23,7 +23,6 @@ const pond = FilePond.create(inputElement, {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     },
-    required: true,
     allowMultiple: true,
     credits: false,
 });

@@ -24,7 +24,7 @@ class Application extends Model implements HasMedia
     protected $fillable = [
         'user_id',
         'status',
-        'application_name',
+        'type',
     ];
 
 
