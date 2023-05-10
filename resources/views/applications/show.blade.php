@@ -88,7 +88,7 @@
                     </div>
                     <div class="mt-5">
                         <h3 class="text-lg font-medium text-gray-900">
-                            Internship Coordinator Message
+                            Internship Coordinator Notes
                         </h3>
 
                         @if(strip_tags($application->message))

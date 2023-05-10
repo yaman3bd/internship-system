@@ -51,8 +51,10 @@ class ApplicationResource extends Resource
                                               'waiting_for_sgk' => 'Waiting For SGK'
                                           ])
                                           ->required(),
-                                    RichEditor::make('message')->hint('Leave a message to the student')
-                                              ->placeholder('Enter a message to the student')
+                                    RichEditor::make('message')
+                                              ->label('Notes')
+                                              ->hint('Leave a note to the student')
+                                              ->placeholder('Enter a note to the student')
                                               ->columnSpanFull(),
                                     SpatieMediaLibraryFileUpload::make('files')
                                                                 ->label('Files')
