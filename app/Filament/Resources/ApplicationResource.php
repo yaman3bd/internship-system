@@ -91,11 +91,9 @@ class ApplicationResource extends Resource
                           ->searchable(),
                 BadgeColumn::make('status')
                            ->label('Application Status')
-                           ->colors([
-                               'success' => 'approved',
-                               'danger' => 'rejected',
-                               'warning' => 'pending'
-                           ]),
+                           ->getStateUsing(function ($record) {
+                               return \Illuminate\Support\Str::of($record->status)->replace('_', ' ')->headline();
+                           })
             ])
             ->filters([
                 SelectFilter::make('status')->options([

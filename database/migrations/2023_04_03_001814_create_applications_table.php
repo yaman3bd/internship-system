@@ -13,9 +13,8 @@ return new class extends Migration {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->enum('type',
-                ['official_letter_request', 'internship_application'])->default('internship_application');
-            $table->enum('status', ['approved', 'rejected', 'pending', 'waiting_for_sgk'])->default('pending');
+            $table->string('type');
+            $table->string('status')->default('pending');
             $table->json('meta')->nullable();
             $table->timestamps();
         });
