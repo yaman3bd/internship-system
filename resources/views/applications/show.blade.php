@@ -78,7 +78,7 @@
                             @endif
                             @if($application->status==='approved')
                                 <span
-                                    class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded uppercase">Green</span>
+                                    class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded uppercase">Approved</span>
                             @endif
                             @if($application->status==='rejected')
                                 <span

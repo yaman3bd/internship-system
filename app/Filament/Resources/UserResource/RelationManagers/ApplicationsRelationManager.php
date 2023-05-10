@@ -29,14 +29,17 @@ class ApplicationsRelationManager extends RelationManager
         return $table
             ->columns([
                 TextColumn::make('id'),
-                TextColumn::make('application_name'),
+                TextColumn::make('type')
+                          ->label('Application Type')
+                          ->getStateUsing(function ($record) {
+                              return \Illuminate\Support\Str::of($record->type)->replace('_', ' ')->headline();
+                          })
+                          ->searchable(),
                 BadgeColumn::make('status')
                            ->label('Application Status')
-                           ->colors([
-                               'success' => 'approved',
-                               'danger' => 'rejected',
-                               'warning' => 'pending'
-                           ]),
+                           ->getStateUsing(function ($record) {
+                               return \Illuminate\Support\Str::of($record->status)->replace('_', ' ')->headline();
+                           })
             ])
             ->filters([
                 SelectFilter::make('status')
