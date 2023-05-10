@@ -10,6 +10,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -51,7 +52,7 @@ class ApplicationResource extends Resource
                                               'waiting_for_sgk' => 'Waiting For SGK'
                                           ])
                                           ->required(),
-                                    RichEditor::make('message')
+                                    Textarea::make('message')
                                               ->label('Notes')
                                               ->hint('Leave a note to the student')
                                               ->placeholder('Enter a note to the student')
