@@ -32,9 +32,9 @@
                                 {{ \Illuminate\Support\Str::of($app->type)->replace('_',' ')->headline() }}
                             </td>
                             <td class="px-6 py-4">
-                                @if($app->status==='waiting for SGK')
+                                @if($app->status==='waiting_for_sgk')
                                     <span
-                                        class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded uppercase">waiting for SGK</span>
+                                        class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded uppercase">Waiting For SGK</span>
                                 @endif
                                 @if($app->status==='pending')
                                     <span

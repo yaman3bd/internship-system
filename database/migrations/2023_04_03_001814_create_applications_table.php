@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->enum('type',
                 ['official_letter_request', 'internship_application'])->default('internship_application');
-            $table->enum('status', ['approved', 'rejected', 'pending', 'waiting for SGK'])->default('pending');
+            $table->enum('status', ['approved', 'rejected', 'pending', 'waiting_for_sgk'])->default('pending');
             $table->json('meta')->nullable();
             $table->timestamps();
         });

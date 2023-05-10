@@ -9,6 +9,7 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -16,6 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Support\Str;
 
 class ApplicationResource extends Resource
 {
@@ -33,16 +35,23 @@ class ApplicationResource extends Resource
                          Section::make('form_info')
                                 ->heading('Application Information')
                                 ->schema([
+                                    TextInput::make('type')
+                                             ->label('Application Type')
+                                             ->dehydrateStateUsing(fn($state) => Str::of($state)->replace(' ',
+                                                 '_')->lower())
+                                             ->formatStateUsing(fn(string $state
+                                             ): string => Str::of($state)->replace('_', ' ')->headline())
+                                             ->disabled(),
                                     Select::make('status')
                                           ->options([
                                               'approved' => 'Approved',
                                               'rejected' => 'Rejected',
                                               'pending' => 'Pending',
+                                              'waiting_for_sgk' => 'Waiting For SGK'
                                           ])
                                           ->required(),
                                     SpatieMediaLibraryFileUpload::make('files')
                                                                 ->label('Files')
-                                                                ->disabled()
                                                                 ->collection('files')
                                                                 ->multiple()
                                                                 ->enableDownload()
@@ -65,8 +74,11 @@ class ApplicationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id'),
-                TextColumn::make('application_name')
-                          ->label('Application Name')
+                TextColumn::make('type')
+                          ->label('Application Type')
+                          ->getStateUsing(function ($record) {
+                              return \Illuminate\Support\Str::of($record->type)->replace('_', ' ')->headline();
+                          })
                           ->searchable(),
                 TextColumn::make('user.name')
                           ->label('Student Name')

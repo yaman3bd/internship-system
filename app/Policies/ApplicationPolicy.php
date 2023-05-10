@@ -60,7 +60,7 @@ class ApplicationPolicy
     {
         return $admin->hasRole('super-admin');
     }
-    
+
     public function reorder(Admin $admin)
     {
         return $admin->hasRole('super-admin');
