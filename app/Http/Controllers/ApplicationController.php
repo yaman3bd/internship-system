@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Application;
+use App\Models\Message;
 use App\Models\TemporaryFile;
+use App\Models\User;
+use App\Notifications\MessageNotification;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+
 
 class ApplicationController extends Controller
 {
@@ -57,9 +63,28 @@ class ApplicationController extends Controller
                 'company_name' => 'required_if:type,official_letter_request',
                 'name_of_the_department_internship_coordinator' => 'required_if:type,official_letter_request',
                 'number_of_incomplete_internships' => 'required_if:type,official_letter_request',
-
             ]
         );
+/*
+        $parent_id = 3;
+
+        $parent_message = Message::query()->find($parent_id);
+        $body = $validated['company_name'];
+        $title = $validated['name_of_the_department_internship_coordinator'];
+
+
+        $message = new Message();
+        $message->parent_id = $parent_id;
+        $message->data = [
+            'body' => $body,
+        ];
+
+        $message->messageable_id = auth()->user()->id;
+        $message->messageable_type = User::class;
+        $message->save();
+
+        Notification::send(auth()->user(), new MessageNotification());*/
+
 
         if ($validated['type'] === 'official_letter_request') {
             $user = auth()->user();

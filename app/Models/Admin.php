@@ -30,6 +30,11 @@ class Admin extends Authenticatable implements FilamentUser
         return true;
     }
 
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'messageable');
+    }
+
 
     public function setPasswordAttribute($value)
     {

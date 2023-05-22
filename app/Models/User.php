@@ -85,6 +85,11 @@ class User extends Authenticatable
         return $this->HasOne(Address::class);
     }
 
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'messageable');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
