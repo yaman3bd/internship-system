@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ApplicationResource\Pages;
-use App\Filament\Resources\ApplicationResource\RelationManagers;
+use App\Filament\Resources\InternshipApplicationResource\Pages;
+use App\Filament\Resources\InternshipApplicationResource\RelationManagers;
 use App\Models\Application;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -20,13 +20,13 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Str;
 
-class ApplicationResource extends Resource
+class InternshipApplicationResource extends Resource
 {
     protected static ?string $model = Application::class;
-
+    protected static ?string $slug = 'internship-applications';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Applications';
-    protected static ?string $label = 'Official Letter Applications';
+    protected static ?string $label = 'Internship Applications';
 
     public static function form(Form $form): Form
     {
@@ -145,21 +145,21 @@ class ApplicationResource extends Resource
         }
 
         if (auth()->user()->hasRole('career-center')) {
-            return parent::getEloquentQuery()->where('type', 'official_letter_request')->where('status',
+            return parent::getEloquentQuery()->where('type', 'internship_application')->where('status',
                 'waiting_for_sgk')->count();
         } else {
-            return static::getModel()::where('type', 'official_letter_request')->count();
+            return static::getModel()::where('type', 'internship_application')->count();
         }
     }
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
+        $baseQuery = parent::getEloquentQuery()->where('type', 'internship_application');
         if (auth()->id() && auth()->user()->hasRole('career-center')) {
-            return parent::getEloquentQuery()
-                         ->where('type', 'official_letter_request')
-                         ->where('status', 'waiting_for_sgk');
+            return $baseQuery
+                ->where('status', 'waiting_for_sgk');
         } else {
-            return parent::getEloquentQuery()->where('type', 'official_letter_request');
+            return $baseQuery;
         }
     }
 }

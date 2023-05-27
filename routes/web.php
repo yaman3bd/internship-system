@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('applications.index');
+        return redirect()->route('applications.index', [
+            'type' => 'official_letter_request'
+        ]);
     } else {
         return view('welcome');
     }
@@ -44,4 +46,23 @@ Route::middleware([
 
     Route::post('/applications', [\App\Http\Controllers\ApplicationController::class, 'store'])
          ->name('applications.store');
+
+
+    Route::get('/messages',
+        [\App\Http\Controllers\MessageController::class, 'index'])->name('messages.index');
+
+    Route::get('/messages/create',
+        [\App\Http\Controllers\MessageController::class, 'create'])->name('messages.create');
+
+    Route::get('/messages/{message}',
+        [\App\Http\Controllers\MessageController::class, 'show'])->name('messages.show');
+
+    Route::post('/messages', [\App\Http\Controllers\MessageController::class, 'store'])
+         ->name('messages.store');
+
+    Route::post('/messages/{message}/reply', [\App\Http\Controllers\MessageController::class, 'reply'])
+         ->name('messages.reply');
+
+    Route::get('/announcements',
+        [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcements.index');
 });

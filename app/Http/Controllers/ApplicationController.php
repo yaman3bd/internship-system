@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use App\Models\Application;
-use App\Models\Message;
 use App\Models\TemporaryFile;
-use App\Models\User;
-use App\Notifications\MessageNotification;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 
 
 class ApplicationController extends Controller
 {
     public function index()
     {
-        $submitted_applications = auth()->user()->applications;
+        $type = request()->query('type');
+        $submitted_applications = auth()->user()->applications()->where('type', $type)->get();
 
         return view('applications.index', compact([
             'submitted_applications'
@@ -36,19 +32,8 @@ class ApplicationController extends Controller
         return view('applications.show', compact('application', 'files'));
     }
 
-    public
-    function create()
+    public function create()
     {
-        /*
-         * some fields the user can fill
-         * update the template with the new fields
-         * send application type offical letter
-         * internship cordinator can download the application
-         * sing it
-         * update the application file with the new one
-         * update the apploication status to be approved
-         * if the application is rejected the user can see the reason
-         * */
         return view('applications.create');
     }
 
@@ -58,20 +43,15 @@ class ApplicationController extends Controller
     ) {
         $validated = $request->validate(
             [
-                'type' => 'required|in:official_letter_request,internship_application',
                 'meta.files' => 'required_if:type,internship_application|array',
                 'company_name' => 'required_if:type,official_letter_request',
                 'name_of_the_department_internship_coordinator' => 'required_if:type,official_letter_request',
                 'number_of_incomplete_internships' => 'required_if:type,official_letter_request',
             ]
         );
+        $type = $request->query('type');
 
-
-
-
-
-
-        if ($validated['type'] === 'official_letter_request') {
+        if ($type === 'official_letter_request') {
             $user = auth()->user();
             $fileName = $user->student_no . '-' . 'official_letter' . '_' . now() . '.docx';
 

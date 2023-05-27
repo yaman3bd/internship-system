@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->morphs('messageable');
             $table->json('data');
             $table->timestamp('read_at')->nullable();
+            $table->string('type')->default('message');
             $table->timestamps();
         });
     }
