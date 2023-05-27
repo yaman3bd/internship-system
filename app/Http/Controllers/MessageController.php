@@ -23,6 +23,9 @@ class MessageController extends Controller
 
     public function show(Message $message)
     {
+        $message->update([
+            'read_at' => now()
+        ]);
         $message = $message->load('replies');
 
         return view('messages.show', compact('message'));
@@ -49,13 +52,16 @@ class MessageController extends Controller
         $message->data = [
             'body' => $validated['body'],
             'title' => $validated['title'],
+            'admin_id' => $admin->id,
         ];
 
         $message->messageable_id = auth()->user()->id;
         $message->messageable_type = User::class;
         $message->save();
 
-        Notification::send($admin, new MessageNotification());
+        Notification::send($admin, new MessageNotification([
+            'url' => route('filament.resources.messages.edit', $message->id)
+        ]));
 
         session()->flash('flash.banner', 'Message Sent Successfully!');
         session()->flash('flash.bannerStyle', 'success');
@@ -75,13 +81,16 @@ class MessageController extends Controller
         $new_message->data = [
             'body' => $validated['body'],
             'title' => $message->data['title'],
+            'admin_id' => $message->data['admin_id'],
         ];
 
         $new_message->messageable_id = auth()->user()->id;
         $new_message->messageable_type = User::class;
         $new_message->save();
 
-        Notification::send($message->messageable, new MessageNotification());
+        Notification::send($message->messageable, new MessageNotification([
+            'url' => route('filament.resources.messages.edit', $new_message->id)
+        ]));
 
         session()->flash('flash.banner', 'Message Sent Successfully!');
         session()->flash('flash.bannerStyle', 'success');

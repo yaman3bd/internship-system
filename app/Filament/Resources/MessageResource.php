@@ -85,7 +85,7 @@ class MessageResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('reply'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -107,24 +107,14 @@ class MessageResource extends Resource
             'edit' => Pages\EditMessage::route('/{record}/edit'),
         ];
     }
-    protected static function getNavigationBadge(): ?string
-    {
-        $baseQuery = parent::getEloquentQuery()->where('parent_id', null);
 
-        if (auth()->id() && auth()->user()->hasRole('super-admin')) {
-            return $baseQuery->count();
-        } else {
-            return $baseQuery->where('messageable_id', auth()->id())->count();
-        }
-    }
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
         $baseQuery = parent::getEloquentQuery()->where('parent_id', null);
         if (auth()->id() && auth()->user()->hasRole('super-admin')) {
             return $baseQuery;
         } else {
-            return $baseQuery->where('messageable_id', auth()->id());
+            return $baseQuery->where('data->admin_id', auth()->id());
         }
-
     }
 }

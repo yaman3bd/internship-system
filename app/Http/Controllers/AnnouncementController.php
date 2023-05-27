@@ -18,6 +18,10 @@ class AnnouncementController extends Controller
 
     public function show(Message $message)
     {
+        $message->update([
+            'read_at' => now()
+        ]);
+
         return view('announcements.show', compact('message'));
     }
 }

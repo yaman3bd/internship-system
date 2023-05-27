@@ -23,7 +23,9 @@
                     </thead>
                     <tbody>
                     @forelse($messages as $message)
-                        <tr @class(['bg-white border-b hover:bg-gray-50',$loop->last?'':'border-b'])>
+                        <tr @class(['border-b hover:bg-gray-50',$loop->last?'':'border-b',
+$message->read_at?'bg-white  hover:bg-gray-50':'bg-gray-200 hover:bg-gray-300',
+])>
                             <td class="px-6 py-4">
 
                                 {{ $message->data['title'] }}
@@ -32,7 +34,7 @@
                                 {{ $message->created_at->format('d/m/Y H:i') }}
                             </td>
                             <td class="px-6 py-4">
-                                <a href="{{route('messages.show',$message->id)}}"
+                                <a href="{{route('announcements.show',$message->id)}}"
                                    class="font-medium text-indigo-600 underline">View</a>
                             </td>
                         </tr>

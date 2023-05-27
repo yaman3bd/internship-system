@@ -27,6 +27,9 @@ class EditMessage extends EditRecord
 
     public function sendMessage()
     {
+        if ( ! $this->message) {
+            return;
+        }
         $parent_id = $this->record->id;
 
         $parent_message = Message::query()->find($parent_id);
@@ -43,7 +46,8 @@ class EditMessage extends EditRecord
         $message->messageable_type = Admin::class;
         $message->save();
 
-        Notification::send($parent_message->messageable, new MessageNotification());
+        Notification::send($parent_message->messageable,
+            new MessageNotification(['url' => route('messages.show', $message->id)]));
 
         $this->message = "";
         $this->getSavedNotification()?->send();
@@ -51,5 +55,12 @@ class EditMessage extends EditRecord
         if (($redirectUrl = $this->getRedirectUrl())) {
             $this->redirect($redirectUrl);
         }
+    }
+    protected function getSavedNotification(): ?\Filament\Notifications\Notification
+    {
+        return \Filament\Notifications\Notification::make()
+                           ->success()
+                           ->title('Message sent')
+                           ->body('Message sent successfully.');
     }
 }

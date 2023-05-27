@@ -10,6 +10,7 @@ use App\Notifications\MessageNotification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Notification;
 
+
 class CreateMessage extends CreateRecord
 {
     protected static string $resource = MessageResource::class;
@@ -45,7 +46,7 @@ class CreateMessage extends CreateRecord
         $message->messageable_type = Admin::class;
         $message->save();
 
-        Notification::send($user, new MessageNotification());
+        Notification::send($user, new MessageNotification(['url' => route('messages.show', $message->id)]));
 
         $this->message = "";
         $this->sendingMessage = false;
@@ -53,5 +54,13 @@ class CreateMessage extends CreateRecord
         $this->getCreatedNotification()?->send();
 
         $this->redirect($this->getRedirectUrl());
+    }
+
+    protected function getCreatedNotification(): ?\Filament\Notifications\Notification
+    {
+        return \Filament\Notifications\Notification::make()
+                           ->success()
+                           ->title('Message sent')
+                           ->body('The message has been sent successfully.');
     }
 }

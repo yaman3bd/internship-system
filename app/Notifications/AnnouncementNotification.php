@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
 
-class MessageNotification extends Notification implements ShouldQueue
+class AnnouncementNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -40,10 +40,10 @@ class MessageNotification extends Notification implements ShouldQueue
         $name = Arr::get($notifiable->toArray(), 'name');
 
         return (new MailMessage)
-            ->subject('New Message')
+            ->subject('New Announcement')
             ->greeting('Hello ' . $name)
-            ->line('You have a new message.')
-            ->action('View Message', url($this->data['url']))
+            ->line('A new announcement has been posted.')
+            ->action('View announcement', url($this->data['url']))
             ->line('Thank you for using our application!');
     }
 

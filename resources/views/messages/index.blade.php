@@ -30,7 +30,9 @@
                     </thead>
                     <tbody>
                     @forelse($messages as $message)
-                        <tr @class(['bg-white border-b hover:bg-gray-50',$loop->last?'':'border-b'])>
+                        <tr @class(['border-b hover:bg-gray-50',$loop->last?'':'border-b',
+$message->read_at?'bg-white  hover:bg-gray-50':'bg-gray-200 hover:bg-gray-300',
+])>
                             <td class="px-6 py-4 text-base text-gray-600">
                                 {{ $message->messageable->name }}
                             </td>

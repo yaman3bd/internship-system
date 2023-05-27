@@ -65,4 +65,6 @@ Route::middleware([
 
     Route::get('/announcements',
         [\App\Http\Controllers\AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::get('/announcements/{message}',
+        [\App\Http\Controllers\AnnouncementController::class, 'show'])->name('announcements.show');
 });

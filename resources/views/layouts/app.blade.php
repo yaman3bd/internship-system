@@ -128,35 +128,52 @@
      'text-gray-500 hover:text-gray-900 hover:bg-indigo-100' => !(request()->routeIs('messages.index')||request()->routeIs('messages.show')||request()->routeIs('messages.create')),
      'text-gray-900 bg-indigo-100' =>  (request()->routeIs('messages.index')||request()->routeIs('messages.show')||request()->routeIs('messages.create')),
  ])>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                     class="w-6 h-6 text-indigo-500">
-                                    <path fill-rule="evenodd"
-                                          d="M6.912 3a3 3 0 00-2.868 2.118l-2.411 7.838a3 3 0 00-.133.882V18a3 3 0 003 3h15a3 3 0 003-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0017.088 3H6.912zm13.823 9.75l-2.213-7.191A1.5 1.5 0 0017.088 4.5H6.912a1.5 1.5 0 00-1.434 1.059L3.265 12.75H6.11a3 3 0 012.684 1.658l.256.513a1.5 1.5 0 001.342.829h3.218a1.5 1.5 0 001.342-.83l.256-.512a3 3 0 012.684-1.658h2.844z"
-                                          clip-rule="evenodd"/>
-                                </svg>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                         class="w-6 h-6 text-indigo-500">
+                                        <path fill-rule="evenodd"
+                                              d="M6.912 3a3 3 0 00-2.868 2.118l-2.411 7.838a3 3 0 00-.133.882V18a3 3 0 003 3h15a3 3 0 003-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0017.088 3H6.912zm13.823 9.75l-2.213-7.191A1.5 1.5 0 0017.088 4.5H6.912a1.5 1.5 0 00-1.434 1.059L3.265 12.75H6.11a3 3 0 012.684 1.658l.256.513a1.5 1.5 0 001.342.829h3.218a1.5 1.5 0 001.342-.83l.256-.512a3 3 0 012.684-1.658h2.844z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
 
 
-                                <span class="ml-3 capitalize">Inbox</span>
+                                    <span class="ml-3 capitalize">Messages</span>
+                                </div>
+                                <span
+                                    class="bg-indigo-500 p-1 items-center justify-center flex text-center font-bold text-base rounded-full ml-auto text-white w-8 h-8"
+                                >
+                                    {{\App\Models\Message::query()
+
+ ->where('messageable_id',auth()->id())
+ ->where('parent_id',null)
+ ->where('type','message')->where('read_at',null)->count()}}
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('announcements.index') }}"
                                 @class([
      'group flex items-center p-2 rounded-lg text-sm font-medium leading-5',
-     'text-gray-500 hover:text-gray-900 hover:bg-indigo-100' => !request()->routeIs('announcements.index'),
-     'text-gray-900 bg-indigo-100' =>  request()->routeIs('announcements.index'),
+     'text-gray-500 hover:text-gray-900 hover:bg-indigo-100' => !(request()->routeIs('announcements.index')||request()->routeIs('announcements.show')||request()->routeIs('announcements.create')),
+     'text-gray-900 bg-indigo-100' =>  request()->routeIs('announcements.index')||request()->routeIs('announcements.show')||request()->routeIs('announcements.create'),
  ])>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                     class="w-6 h-6 text-indigo-500">
-                                    <path fill-rule="evenodd"
-                                          d="M1.5 9.832v1.793c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875V9.832a3 3 0 00-.722-1.952l-3.285-3.832A3 3 0 0016.215 3h-8.43a3 3 0 00-2.278 1.048L2.222 7.88A3 3 0 001.5 9.832zM7.785 4.5a1.5 1.5 0 00-1.139.524L3.881 8.25h3.165a3 3 0 012.496 1.336l.164.246a1.5 1.5 0 001.248.668h2.092a1.5 1.5 0 001.248-.668l.164-.246a3 3 0 012.496-1.336h3.165l-2.765-3.226a1.5 1.5 0 00-1.139-.524h-8.43z"
-                                          clip-rule="evenodd"/>
-                                    <path
-                                        d="M2.813 15c-.725 0-1.313.588-1.313 1.313V18a3 3 0 003 3h15a3 3 0 003-3v-1.688c0-.724-.588-1.312-1.313-1.312h-4.233a3 3 0 00-2.496 1.336l-.164.246a1.5 1.5 0 01-1.248.668h-2.092a1.5 1.5 0 01-1.248-.668l-.164-.246A3 3 0 007.046 15H2.812z"/>
-                                </svg>
+                                <div
+                                    class="flex items-center">
 
-
-                                <span class="ml-3 capitalize">Announcements</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-indigo-500"
+                                         viewBox="0 0 20 20" fill="currentColor">
+                                        <path
+                                            d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"/>
+                                        <path
+                                            d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"/>
+                                    </svg>
+                                    <span class="ml-3 capitalize">Announcements</span>
+                                </div>
+                                <span
+                                    class="bg-indigo-500 p-1 items-center justify-center flex text-center font-bold text-base rounded-full ml-auto text-white w-8 h-8"
+                                >
+                                    {{\App\Models\Message::query()->where('type','announcement')->where('read_at',null)->count()}}
+                                </span>
                             </a>
                         </li>
                         <li>
