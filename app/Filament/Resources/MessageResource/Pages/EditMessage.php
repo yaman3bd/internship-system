@@ -3,31 +3,53 @@
 namespace App\Filament\Resources\MessageResource\Pages;
 
 use App\Filament\Resources\MessageResource;
+use App\Models\Admin;
+use App\Models\Message;
+use App\Notifications\MessageNotification;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Pages\Actions\Action;
-use App\Models\User;
-use Filament\Forms;
+use Illuminate\Support\Facades\Notification;
+
 
 class EditMessage extends EditRecord
 {
     protected static string $resource = MessageResource::class;
+    protected static string $view = 'filament.forms.components.notifications';
+    public $message = "";
 
     protected function getActions(): array
     {
         return [
             Actions\DeleteAction::make(),
-            Action::make('updateAuthor')
-                  ->action(function (array $data): void {
-                      $this->record->author()->associate($data['authorId']);
-                      $this->record->save();
-                  })
-                  ->form([
-                      Forms\Components\Select::make('authorId')
-                                             ->label('Author')
-                                             ->options(User::query()->pluck('name', 'id'))
-                                             ->required(),
-                  ]),
         ];
+    }
+
+
+    public function sendMessage()
+    {
+        $parent_id = $this->record->id;
+
+        $parent_message = Message::query()->find($parent_id);
+
+
+        $message = new Message();
+        $message->parent_id = $parent_id;
+        $message->data = [
+            'body' => $this->message,
+            'title' => $parent_message->data['title'],
+        ];
+
+        $message->messageable_id = auth()->user()->id;
+        $message->messageable_type = Admin::class;
+        $message->save();
+
+        Notification::send($parent_message->messageable, new MessageNotification());
+
+        $this->message = "";
+        $this->getSavedNotification()?->send();
+
+        if (($redirectUrl = $this->getRedirectUrl())) {
+            $this->redirect($redirectUrl);
+        }
     }
 }

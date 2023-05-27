@@ -6,7 +6,6 @@ use App\Filament\Resources\ApplicationResource\Pages;
 use App\Filament\Resources\ApplicationResource\RelationManagers;
 use App\Models\Application;
 use Filament\Forms\Components\Group;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -53,10 +52,10 @@ class ApplicationResource extends Resource
                                           ])
                                           ->required(),
                                     Textarea::make('message')
-                                              ->label('Notes')
-                                              ->hint('Leave a note to the student')
-                                              ->placeholder('Enter a note to the student')
-                                              ->columnSpanFull(),
+                                            ->label('Notes')
+                                            ->hint('Leave a note to the student')
+                                            ->placeholder('Enter a note to the student')
+                                            ->columnSpanFull(),
                                     SpatieMediaLibraryFileUpload::make('files')
                                                                 ->label('Files')
                                                                 ->collection('files')
