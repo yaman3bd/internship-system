@@ -33,7 +33,7 @@ class MessageController extends Controller
 
     public function create()
     {
-        $admins = Admin::query()->get();
+        $admins = Admin::query()->whereNot('id',1)->get();
 
         return view('messages.create', compact('admins'));
     }
@@ -49,6 +49,7 @@ class MessageController extends Controller
         $admin = Admin::query()->findOrFail($validated['admin_id']);
         $message = new Message();
         $message->parent_id = null;
+        $message->read_at = now();
         $message->data = [
             'body' => $validated['body'],
             'title' => $validated['title'],
