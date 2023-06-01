@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\ApplicationFile;
 use App\Models\TemporaryFile;
 use Exception;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class ApplicationController extends Controller
 
     public function show(Application $application)
     {
+
         $files = $application->getMedia('files')->map(function ($media) {
             return [
                 'name' => $media->name,
@@ -34,13 +36,25 @@ class ApplicationController extends Controller
 
     public function create()
     {
-        return view('applications.create');
+
+        $files = ApplicationFile::query()->get()->map(function ($file) {
+            $media = $file->getMedia('file')->first();
+
+            if ($media) {
+                return [
+                    'name' => $media->name,
+                    'url' => $media->getUrl(),
+                ];
+            }
+
+            return null;
+        });
+
+        return view('applications.create', compact('files'));
     }
 
-    public
-    function store(
-        Request $request
-    ) {
+    public function store(Request $request)
+    {
         $validated = $request->validate(
             [
                 'meta.files' => 'required_if:type,internship_application|array',

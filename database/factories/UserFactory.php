@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $fullName = $this->faker->name;
-        $email = Str::lower(Str::replace(' ', '.', $fullName)) . '@st.uskudar.edu.tr';
+        $email = 'yaman3bd@st.uskudar.edu.tr';
 
         return [
             'name' => $fullName,
