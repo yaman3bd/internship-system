@@ -53,17 +53,12 @@
                                     <span
                                         class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded uppercase">rejected</span>
                                 @endif
-
                             </td>
                             <td class="px-6 py-4 text-base text-gray-600">
                                 {{ $app->created_at->format('d/m/Y H:i') }}
                             </td>
                             <td class="px-6 py-4">
-                                <a href="{{route('applications.show',[
-		                        'application' => $app->id ,
-		                        'type' => request()->query('type')??'official_letter_request'
-])}}"
-                                   class="font-medium text-indigo-600 underline">View</a>
+                                <a href="{{route('applications.show',['application' => $app->id ,'type' => request()->query('type')??'official_letter_request'])}}" class="font-medium text-indigo-600 underline">View</a>
                             </td>
                         </tr>
                     @empty

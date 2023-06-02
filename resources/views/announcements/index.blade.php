@@ -27,7 +27,6 @@
 $message->read_at?'bg-white  hover:bg-gray-50':'bg-gray-200 hover:bg-gray-300',
 ])>
                             <td class="px-6 py-4">
-
                                 {{ $message->data['title'] }}
                             </td>
                             <td class="px-6 py-4 text-base text-gray-600">

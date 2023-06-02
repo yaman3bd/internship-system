@@ -17,6 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Livewire\Component;
 
 class ApplicationFileResource extends Resource
 {
@@ -50,6 +51,8 @@ class ApplicationFileResource extends Resource
                                                                 ->enableDownload()
                                                                 ->maxFiles(1)
                                                                 ->required()
+                                                                ->hidden(fn(Component $livewire
+                                                                ): bool => $livewire instanceof Pages\CreateApplicationFile)
                                                                 ->columnSpanFull()
                                 ])
                                 ->columns(),

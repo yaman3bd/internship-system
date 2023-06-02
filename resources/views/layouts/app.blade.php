@@ -139,15 +139,7 @@
 
                                     <span class="ml-3 capitalize">Messages</span>
                                 </div>
-                                <span
-                                    class="bg-indigo-500 p-1 items-center justify-center flex text-center font-bold text-base rounded-full ml-auto text-white w-8 h-8"
-                                >
-                                    {{\App\Models\Message::query()
 
- ->where('messageable_id',auth()->id())
- ->where('parent_id',null)
- ->where('type','message')->where('read_at',null)->count()}}
-                                </span>
                             </a>
                         </li>
                         <li>

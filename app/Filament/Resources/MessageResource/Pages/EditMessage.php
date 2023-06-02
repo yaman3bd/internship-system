@@ -40,6 +40,7 @@ class EditMessage extends EditRecord
         $message->data = [
             'body' => $this->message,
             'title' => $parent_message->data['title'],
+            'admin_id' => $parent_message->data['admin_id'],
         ];
 
         $message->messageable_id = auth()->user()->id;
@@ -56,11 +57,12 @@ class EditMessage extends EditRecord
             $this->redirect($redirectUrl);
         }
     }
+
     protected function getSavedNotification(): ?\Filament\Notifications\Notification
     {
         return \Filament\Notifications\Notification::make()
-                           ->success()
-                           ->title('Message sent')
-                           ->body('Message sent successfully.');
+                                                   ->success()
+                                                   ->title('Message sent')
+                                                   ->body('Message sent successfully.');
     }
 }

@@ -40,10 +40,11 @@ class CreateMessage extends CreateRecord
         $message->data = [
             'body' => $body,
             'title' => $title,
+            'admin_id' => auth()->user()->id,
         ];
 
-        $message->messageable_id = auth()->user()->id;
-        $message->messageable_type = Admin::class;
+        $message->messageable_id = $user->id;
+        $message->messageable_type = User::class;
         $message->save();
 
         Notification::send($user, new MessageNotification(['url' => route('messages.show', $message->id)]));

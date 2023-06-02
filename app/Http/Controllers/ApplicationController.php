@@ -42,7 +42,7 @@ class ApplicationController extends Controller
 
             if ($media) {
                 return [
-                    'name' => $media->name,
+                    'name' => $file->name,
                     'url' => $media->getUrl(),
                 ];
             }
@@ -63,6 +63,7 @@ class ApplicationController extends Controller
                 'number_of_incomplete_internships' => 'required_if:type,official_letter_request',
             ]
         );
+
         $type = $request->query('type');
 
         if ($type === 'official_letter_request') {
@@ -125,7 +126,6 @@ class ApplicationController extends Controller
                 [
                     'align' => 'right'
                 ]
-
             );
             $section->addText(
                 $validated['name_of_the_department_internship_coordinator'],
@@ -137,6 +137,7 @@ class ApplicationController extends Controller
                     'align' => 'right'
                 ]
             );
+
             $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
             try {
                 $objWriter->save(storage_path($fileName));
@@ -147,8 +148,10 @@ class ApplicationController extends Controller
                         'type' => 'official_letter_request'
                     ]
                 );
+
                 $application->addMedia(storage_path($fileName))
                             ->toMediaCollection('files');
+
                 rmdir(storage_path($fileName));
             } catch (Exception $e) {
             }
@@ -156,12 +159,10 @@ class ApplicationController extends Controller
         } else {
             $files = $request->meta['files'];
 
-            $application = Application::query()->create(
-                [
-                    'user_id' => auth()->id(),
-                    'type' => 'internship_application'
-                ]
-            );
+            $application = Application::query()->create([
+                'user_id' => auth()->id(),
+                'type' => 'internship_application'
+            ]);
 
             foreach ($files as $file) {
                 $temporaryFile = TemporaryFile::query()->where('folder', $file)->first();
@@ -177,6 +178,6 @@ class ApplicationController extends Controller
         session()->flash('flash.banner', 'Application Submitted Successfully!');
         session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route('applications.index')->with('success', 'Item created successfully!');
+        return redirect()->route('applications.index', ['type' => $type]);
     }
 }
